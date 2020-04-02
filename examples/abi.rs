@@ -2,6 +2,7 @@ use ethcontract::prelude::*;
 use std::any;
 
 ethcontract::contract!("examples/truffle/build/contracts/AbiTypes.json");
+ethcontract::contract!("examples/truffle/build/contracts/AbiEncoderV2.json");
 
 fn main() {
     futures::executor::block_on(run());

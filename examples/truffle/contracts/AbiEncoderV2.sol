@@ -53,8 +53,12 @@ contract AbiEncoderV2 {
 
     a = 42;
 
-    emit Values(s, t, a);
+    T memory id;
+    id.x = block.number;
+    id.y = now;
+
+    emit Values(id, s, t, a);
   }
 
-  event Values(S s, T t, uint256);
+  event Values(T indexed id, S s, T t, uint256);
 }
