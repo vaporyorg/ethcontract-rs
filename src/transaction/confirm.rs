@@ -199,12 +199,12 @@ impl<T: Transport> ConfirmationContext<'_, T> {
     /// Waits for a certain number of blocks to be mined using a block filter.
     async fn wait_for_blocks_with_filter(&self, block_count: usize) -> Result<(), ExecutionError> {
         let block_filter = self.web3.eth_filter().create_blocks_filter().await?;
-        let mut stream = block_filter.stream(self.params.poll_interval);
-        for _ in 0..block_count {
-            stream
-                .next()
-                .await
-                .ok_or(ExecutionError::StreamEndedUnexpectedly)??;
+        let stream = block_filter.stream(self.params.poll_interval);
+        let results = stream.take(block_count).collect::<Vec<_>>().await;
+        let blocks = results.into_iter().collect::<Result<Vec<_>, _>>()?;
+
+        if blocks.len() < block_count {
+            return Err(ExecutionError::StreamEndedUnexpectedly);
         }
 
         Ok(())

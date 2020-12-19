@@ -24,8 +24,6 @@ http = ["web3/http"]
 http-tls = ["web3/http-tls"]
 ws-tokio = ["web3/ws-tokio"]
 ws-tls-tokio = ["web3/ws-tls-tokio"]
-ws-async-std = ["web3/ws-async-std"]
-ws-tls-async-std = ["web3/ws-tls-async-std"]
 
 [workspace]
 members = [
